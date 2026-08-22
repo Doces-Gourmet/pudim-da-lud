@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -78,6 +77,8 @@ button{font-family:inherit;}
 .btn:active{transform:translateY(0);}
 .btn.ghost{background:transparent;color:var(--brown-deep);}
 .btn.gold{background:var(--caramel);border-color:var(--caramel);color:#fff;}
+.btn.whats{background:#25D366;border-color:#25D366;color:#fff;}
+.btn.whats:hover{background:#1EBE5B;border-color:#1EBE5B;}
 .btn.block{width:100%;}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 .btn.sm{padding:9px 16px;font-size:13.5px;}
@@ -142,7 +143,7 @@ nav.links a:hover{border-color:var(--caramel);}
 .hero h1{font-size:clamp(34px,4.6vw,56px);line-height:1.08;font-weight:800;}
 .hero h1 em{font-style:normal;color:var(--caramel);}
 .hero p.lead{
-  margin:20px 0 30px;font-size:17.5px;color:var(--text-soft);max-width:480px;
+  margin:20px 0 30px;font-size:17.5px;color:var(--text-soft);max-width:560px;
 }
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
 .hero-grid{position:relative;z-index:1;}
@@ -152,7 +153,7 @@ nav.links a:hover{border-color:var(--caramel);}
 .section-head{text-align:center;max-width:620px;margin:0 auto 40px;}
 .section-head h2{font-size:clamp(26px,3.2vw,36px);margin-top:10px;}
 .section-head p{color:var(--text-soft);margin-top:12px;font-size:15.5px;}
-.sizes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.sizes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
 .size-card{
   border:1px solid var(--line);border-radius:var(--radius);
   padding:26px 20px;text-align:center;background:var(--cream-2);
@@ -200,7 +201,7 @@ nav.links a:hover{border-color:var(--caramel);}
   text-align:center;color:#fff;font-size:14px;letter-spacing:.02em;
 }
 .size-card h3{font-size:19px;}
-.size-card .ml{color:var(--caramel);font-weight:600;font-size:14.5px;margin-top:4px;}
+.size-card .ml{font-family:'Playfair Display',serif;color:var(--brown-deep);font-weight:700;font-size:22px;}
 .size-card .dims{color:var(--text-soft);font-size:13.5px;margin-top:10px;}
 
 /* ---------- Menu ---------- */
@@ -211,9 +212,13 @@ nav.links a:hover{border-color:var(--caramel);}
   overflow:hidden;display:flex;flex-direction:column;
   box-shadow:var(--shadow-sm);
 }
-.flavor-photo{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--cream);}
+.flavor-photo{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--cream);position:relative;}
 .flavor-photo img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .2s ease;}
 .flavor-photo:hover img{transform:scale(1.04);}
+.flavor-photo.is-unavailable img{filter:brightness(.35);cursor:default;}
+.flavor-photo.is-unavailable:hover img{transform:none;}
+.unavailable-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.unavailable-overlay span{color:#fff;font-weight:700;font-size:15px;letter-spacing:.3px;text-transform:uppercase;background:rgba(0,0,0,.55);padding:8px 16px;border-radius:999px;}
 .flavor-info{padding:18px 22px 0;}
 .flavor-info h3{font-size:20px;}
 .flavor-info p{color:var(--text-soft);font-size:14px;margin-top:6px;}
@@ -222,16 +227,15 @@ nav.links a:hover{border-color:var(--caramel);}
   background:var(--cream);border:1px solid var(--line);border-radius:12px;
 }
 .size-block-label{display:block;font-size:12px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
-.size-toggle{display:flex;gap:8px;}
+.size-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .size-opt{
-  flex:1;
   border:1.5px solid var(--line);border-radius:10px;
   padding:9px 6px;text-align:center;cursor:pointer;
   background:var(--cream-2);
   transition:all .15s;
 }
-.size-opt strong{display:block;font-size:14px;color:var(--brown-deep);}
-.size-opt span{display:block;font-size:11.5px;color:var(--text-soft);margin-top:2px;}
+.size-opt strong{display:block;font-size:13.5px;color:var(--brown-deep);}
+.size-opt span{display:block;font-size:11px;color:var(--text-soft);margin-top:2px;}
 .size-opt.active{border-color:var(--caramel);background:#FCEFDD;}
 .size-opt.active strong{color:var(--caramel);}
 .flavor-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding:16px 22px 22px;}
@@ -322,6 +326,16 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
 }
 .fab.cart{background:var(--brown-deep);color:var(--cream);position:relative;}
 .fab.track{background:var(--paper);border:1.5px solid var(--line);color:var(--brown-deep);}
+.fab.whats-fab{
+  background:#25D366;color:#fff;
+  width:60px;height:60px;
+  animation:whatsPulse 2.4s ease-in-out infinite;
+}
+.fab.whats-fab:hover{background:#1EBE5B;}
+@keyframes whatsPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,0.45), var(--shadow);}
+  50%{box-shadow:0 0 0 10px rgba(37,211,102,0),  var(--shadow);}
+}
 
 /* ---------- Cart Drawer ---------- */
 .overlay{
@@ -445,7 +459,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
 
 /* ---------- Responsive ---------- */
 @media(max-width:920px){
-  .sizes-grid{grid-template-columns:1fr;}
+  .sizes-grid{grid-template-columns:1fr 1fr;}
   .menu-grid{grid-template-columns:1fr;}
   .how-grid{grid-template-columns:1fr 1fr;}
   .pickup-card{grid-template-columns:1fr;}
@@ -460,6 +474,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
 @media(max-width:520px){
   .how-grid{grid-template-columns:1fr;}
   .pay-grid{grid-template-columns:1fr;}
+  .sizes-grid{grid-template-columns:1fr;}
 }
 @media(max-width:640px){
   .container{padding:0 18px;}
@@ -515,12 +530,9 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
       <a href="#como-funciona">Como funciona</a>
       <a href="#retirada">Retirada</a>
       <a href="#entrega-info">Entrega</a>
-      <a href="#" id="navTrack">Acompanhar pedido</a>
+      <a href="#" id="navWhats">WhatsApp</a>
     </nav>
     <div class="header-actions">
-      <button class="icon-btn" id="trackBtnHeader" title="Acompanhar pedido" aria-label="Acompanhar pedido">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-      </button>
       <button class="icon-btn" id="cartBtnHeader" title="Ver carrinho" aria-label="Ver carrinho">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.4 12.2a2 2 0 002 1.8h8.2a2 2 0 002-1.6L21 8H6"/></svg>
         <span class="badge" id="cartBadge" style="display:none;">0</span>
@@ -536,7 +548,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
     <div>
       <p class="eyebrow">Feito com carinho, para doces lembranças</p>
       <h1>Sabor que encanta,<br><em>momento que fica.</em></h1>
-      <p class="lead">Pudins artesanais em três tamanhos, feitos na hora e prontos para retirada. Monte seu pedido, escolha a forma de pagamento e acompanhe tudo por aqui.</p>
+      <p class="lead">O pudim perfeito para cada momento! 🍮<br>Trabalhamos com pudins artesanais feitos sob encomenda, disponíveis em quatro tamanhos pelo site. Precisa de algo diferente ou uma quantidade maior? Fale conosco pelo WhatsApp e monte sua encomenda personalizada.</p>
       <div class="hero-ctas">
         <a href="#cardapio" class="btn gold">Ver cardápio</a>
         <a href="#retirada" class="btn ghost">Retirada no local</a>
@@ -552,26 +564,28 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
     <div class="section-head">
       <p class="eyebrow">Escolha o tamanho</p>
       <h2>Do docinho ao presente completo</h2>
-      <p>Três tamanhos disponíveis para cada sabor. O preço e a quantidade se ajustam automaticamente no cardápio.</p>
+      <p>Quatro tamanhos disponíveis para cada sabor. O preço e a quantidade se ajustam automaticamente no cardápio.</p>
     </div>
     <div class="sizes-grid">
       <div class="size-card">
-        <div class="pote-img"><img src="assets/pote-p.jpg" alt="Vasilha tamanho P, 8 cm de diâmetro"></div>
-        <h3>Pequeno</h3>
+        <div class="pote-img"><img src="assets/pote-80.jpg" alt="Vasilha 80 ml, 8 cm de diâmetro"></div>
         <p class="ml">80 ml</p>
         <p class="dims">8 cm de diâmetro × 3 cm de altura</p>
       </div>
       <div class="size-card">
-        <div class="pote-img"><img src="assets/pote-m.jpg" alt="Vasilha tamanho M, 9,6 cm de diâmetro"></div>
-        <h3>Médio</h3>
-        <p class="ml">120 ml</p>
-        <p class="dims">9,6 cm de diâmetro × 3,8 cm de altura</p>
-      </div>
-      <div class="size-card">
-        <div class="pote-img"><img src="assets/pote-g.jpg" alt="Vasilha tamanho G, 13 cm de diâmetro"></div>
-        <h3>Grande</h3>
+        <div class="pote-img"><img src="assets/pote-250.jpg" alt="Vasilha 250 ml, 13 cm de diâmetro"></div>
         <p class="ml">250 ml</p>
         <p class="dims">13 cm de diâmetro × 4,5 cm de altura</p>
+      </div>
+      <div class="size-card">
+        <div class="pote-img"><img src="assets/pote-500.jpg" alt="Vasilha 500 ml, 16,3 cm de diâmetro"></div>
+        <p class="ml">500 ml</p>
+        <p class="dims">16,3 cm de diâmetro × 6,0 cm de altura</p>
+      </div>
+      <div class="size-card">
+        <div class="pote-img"><img src="assets/pote-1100.jpg" alt="Vasilha 1100 ml, 20,5 cm de diâmetro"></div>
+        <p class="ml">1100 ml</p>
+        <p class="dims">20,5 cm de diâmetro × 7,1 cm de altura</p>
       </div>
     </div>
   </div>
@@ -601,7 +615,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
       <div class="how-card"><div class="num">01</div><h4>Monte o carrinho</h4><p>Escolha os sabores, tamanhos e quantidades no cardápio.</p></div>
       <div class="how-card"><div class="num">02</div><h4>Finalize o pedido</h4><p>Informe seus dados, escolha a forma de pagamento e confirme.</p></div>
       <div class="how-card"><div class="num">03</div><h4>Confirmação no WhatsApp</h4><p>Seu pedido é enviado para nosso WhatsApp com todos os detalhes.</p></div>
-      <div class="how-card"><div class="num">04</div><h4>Acompanhe e retire</h4><p>Use o número do pedido para acompanhar o status e retire no endereço.</p></div>
+      <div class="how-card"><div class="num">04</div><h4>Acompanhe seu pedido</h4><p>Você será avisado no seu WhatsApp quando seu pedido estiver pronto, ou para a entrega ou retirada.</p></div>
     </div>
   </div>
 </section>
@@ -676,13 +690,9 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
 
 <!-- ============ FLOATING BUTTONS ============ -->
 <div class="fab-stack">
-  <button class="fab track" id="trackBtnFab" title="Acompanhar pedido" aria-label="Acompanhar pedido">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-  </button>
-  <button class="fab cart" id="cartBtnFab" title="Ver carrinho" aria-label="Ver carrinho">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.4 12.2a2 2 0 002 1.8h8.2a2 2 0 002-1.6L21 8H6"/></svg>
-    <span class="badge" id="cartBadgeFab" style="display:none;">0</span>
-  </button>
+  <a href="#" id="whatsFabBtn" class="fab whats-fab" target="_blank" title="Falar no WhatsApp" aria-label="Falar no WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 4.99L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.05 2h-.01zm0 18.1h-.01c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.19 8.19 0 012.42 5.83c0 4.55-3.7 8.21-8.26 8.21zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01a.9.9 0 00-.66.31c-.23.25-.87.85-.87 2.08s.89 2.42 1.02 2.58c.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+  </a>
 </div>
 
 <!-- ============ CART DRAWER ============ -->
@@ -764,7 +774,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
 
         <div class="field">
           <label for="custObs">Observações (opcional)</label>
-          <textarea id="custObs" rows="2" placeholder="Ex: tirar a calda, embalar para presente..."></textarea>
+          <textarea id="custObs" rows="2" placeholder=""></textarea>
         </div>
 
         <div class="order-summary" id="orderSummary"></div>
@@ -773,7 +783,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
           Enviar pedido pelo WhatsApp
         </button>
-        <p class="note-box">Ao confirmar, vamos abrir o WhatsApp com seu pedido pronto para envio. Você recebe um número de pedido para acompanhar o status aqui no site.</p>
+        <p class="note-box">Assim que seu pedido ficar pronto, você receberá uma mensagem no WhatsApp informando.</p>
       </div>
 
       <div id="checkoutConfirm" style="display:none;">
@@ -833,22 +843,23 @@ const CONFIG = {
 
 /* Tamanhos disponíveis (medidas reais informadas) */
 const SIZES = {
-  P: { label: "P", ml: "80 ml", dims: "8 cm x 3 cm" },
-  M: { label: "M", ml: "120 ml", dims: "9,6 cm x 3,8 cm" },
-  G: { label: "G", ml: "250 ml", dims: "13 cm x 4,5 cm" }
+  "80":   { label: "80 ml",   dims: "8 cm de diâmetro" },
+  "250":  { label: "250 ml",  dims: "13 cm de diâmetro" },
+  "500":  { label: "500 ml",  dims: "16,3 cm de diâmetro" },
+  "1100": { label: "1100 ml", dims: "20,5 cm de diâmetro" }
 };
 
-/* Cardápio — 4 sabores, com foto e preços por tamanho (P / M / G). AJUSTE os preços conforme sua realidade. */
+/* Cardápio — 2 sabores, com foto e preços por tamanho (80 / 250 / 500 / 1100 ml). AJUSTE os preços conforme sua realidade. */
 const FLAVORS = [
-  { id:"classico", nome:"Pudim Clássico", desc:"Clássico, cremoso e irresistível.", img:"assets/pudim-classico.jpg", precos:{P:9.90, M:12.90, G:22.90} },
-  { id:"leite-ninho", nome:"Pudim de Leite Ninho", desc:"Leve, doce e com o sabor único do Leite Ninho.", img:"assets/pudim-leite-ninho.jpg", precos:{P:11.90, M:14.90, G:25.90} }
+  { id:"classico", nome:"Pudim Clássico", desc:"Clássico, cremoso e irresistível.", img:"assets/pudim-classico.jpg", precos:{"80":6.99, "250":21.99, "500":39.99, "1100":69.99} },
+  { id:"leite-ninho", nome:"Pudim de Leite Ninho", desc:"Leve, doce e com o sabor único do Leite Ninho.", img:"assets/pudim-leite-ninho.jpg", precos:{"80":6.99, "250":21.99, "500":39.99, "1100":69.99}, indisponivel:true }
 ];
 
 /* =========================================================
    ESTADO
    ========================================================= */
 let cart = JSON.parse(localStorage.getItem("pudimLudCart") || "[]");
-let selectedSize = {}; // sabor.id -> "P"/"M"/"G" escolhido no card antes de adicionar
+let selectedSize = {}; // sabor.id -> "80"/"250"/"500"/"1100" escolhido no card antes de adicionar
 let selectedPay = "";
 
 function saveCart(){ localStorage.setItem("pudimLudCart", JSON.stringify(cart)); }
@@ -861,16 +872,19 @@ const menuGrid = document.getElementById("menuGrid");
 
 function renderMenu(){
   menuGrid.innerHTML = FLAVORS.map(f => {
-    if(!selectedSize[f.id]) selectedSize[f.id] = "M";
+    if(!selectedSize[f.id]) selectedSize[f.id] = "250";
     const sizeButtons = Object.keys(SIZES).map(s => `
       <div class="size-opt ${selectedSize[f.id]===s?'active':''}" data-flavor="${f.id}" data-size="${s}">
         <strong>${SIZES[s].label}</strong>
-        <span>${SIZES[s].ml}</span>
+        <span>${SIZES[s].dims}</span>
       </div>
     `).join("");
     return `
       <div class="flavor-card">
-        <div class="flavor-photo"><img src="${f.img}" alt="${f.nome}" loading="lazy"></div>
+        <div class="flavor-photo${f.indisponivel ? ' is-unavailable' : ''}">
+          <img src="${f.img}" alt="${f.nome}" loading="lazy">
+          ${f.indisponivel ? '<div class="unavailable-overlay"><span>Indisponível no momento</span></div>' : ''}
+        </div>
         <div class="flavor-info">
           <h3>${f.nome}</h3>
           <p>${f.desc}</p>
@@ -881,9 +895,9 @@ function renderMenu(){
         </div>
         <div class="flavor-bottom">
           <span class="price-tag" id="price-${f.id}">${fmt(f.precos[selectedSize[f.id]])}</span>
-          <button class="add-btn" data-add="${f.id}">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
-            Adicionar
+          <button class="add-btn" data-add="${f.id}"${f.indisponivel ? ' disabled style="opacity:.5;cursor:not-allowed;"' : ''}>
+            ${f.indisponivel ? 'Indisponível' : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+            Adicionar`}
           </button>
         </div>
       </div>
@@ -915,6 +929,7 @@ menuGrid.addEventListener("click", (e) => {
     const fid = addBtn.dataset.add;
     const size = selectedSize[fid];
     const f = FLAVORS.find(x=>x.id===fid);
+    if(f.indisponivel) return;
     addToCart(f, size);
     addBtn.classList.add("add-flash");
     setTimeout(()=>addBtn.classList.remove("add-flash"), 500);
@@ -931,7 +946,7 @@ function addToCart(flavor, size){
   if(existing){
     existing.qty += 1;
   } else {
-    cart.push({ key, flavorId:flavor.id, nome:flavor.nome, size, ml:SIZES[size].ml, preco:flavor.precos[size], qty:1 });
+    cart.push({ key, flavorId:flavor.id, nome:flavor.nome, size, ml:SIZES[size].label, preco:flavor.precos[size], qty:1 });
   }
   saveCart();
   renderCart();
@@ -964,7 +979,8 @@ const cartFoot = document.getElementById("cartFoot");
 
 function renderCart(){
   const count = cartCount();
-  [document.getElementById("cartBadge"), document.getElementById("cartBadgeFab")].forEach(b=>{
+  [document.getElementById("cartBadge")].forEach(b=>{
+    if(!b) return;
     b.style.display = count > 0 ? "flex" : "none";
     b.textContent = count;
   });
@@ -985,7 +1001,7 @@ function renderCart(){
       </div>
       <div class="cart-item-info">
         <h4>${i.nome}</h4>
-        <div class="meta">Tamanho ${i.size} · ${i.ml}</div>
+        <div class="meta">${i.ml}</div>
         <div class="qty-row">
           <button class="qty-btn" data-dec="${i.key}">−</button>
           <span>${i.qty}</span>
@@ -1019,7 +1035,6 @@ const cartDrawer = document.getElementById("cartDrawer");
 function openCart(){ cartOverlay.classList.add("show"); cartDrawer.classList.add("show"); }
 function closeCartFn(){ cartOverlay.classList.remove("show"); cartDrawer.classList.remove("show"); }
 document.getElementById("cartBtnHeader").onclick = openCart;
-document.getElementById("cartBtnFab").onclick = openCart;
 document.getElementById("closeCart").onclick = closeCartFn;
 cartOverlay.onclick = closeCartFn;
 
@@ -1048,15 +1063,16 @@ function openTrack(){
   renderMyOrders();
 }
 function closeTrack(){ trackOverlay.classList.remove("show"); }
-document.getElementById("trackBtnHeader").onclick = openTrack;
-document.getElementById("trackBtnFab").onclick = openTrack;
-document.getElementById("navTrack").onclick = (e)=>{ e.preventDefault(); openTrack(); };
 document.getElementById("footerTrack").onclick = (e)=>{ e.preventDefault(); openTrack(); };
 document.getElementById("closeTrack").onclick = closeTrack;
 trackOverlay.addEventListener("click", (e)=>{ if(e.target === trackOverlay) closeTrack(); });
 document.getElementById("goTrackAfterOrder").onclick = ()=>{ closeCheckout(); openTrack(); };
 
 document.getElementById("footerWhats").onclick = (e)=>{
+  e.preventDefault();
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}`, "_blank");
+};
+document.getElementById("navWhats").onclick = (e)=>{
   e.preventDefault();
   window.open(`https://wa.me/${CONFIG.whatsappNumber}`, "_blank");
 };
@@ -1070,6 +1086,11 @@ navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", ()=> nav
 /* Waze link */
 document.getElementById("wazeLink").href =
   "https://waze.com/ul?q=" + encodeURIComponent(CONFIG.address.full) + "&navigate=yes";
+
+/* WhatsApp direto (bolinha flutuante) */
+const heroWhatsMsg = "Olá! Vim pelo site e gostaria de fazer uma encomenda de pudim. 🍮";
+document.getElementById("whatsFabBtn").href =
+  `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(heroWhatsMsg)}`;
 
 /* =========================================================
    FORMA DE PAGAMENTO
@@ -1131,7 +1152,7 @@ document.getElementById("entregaInfoBtn").onclick = () => {
 function renderOrderSummary(){
   const box = document.getElementById("orderSummary");
   const rows = cart.map(i => `
-    <div class="row"><span>${i.qty}x ${i.nome} (${i.size})</span><span>${fmt(i.preco*i.qty)}</span></div>
+    <div class="row"><span>${i.qty}x ${i.nome} (${i.ml})</span><span>${fmt(i.preco*i.qty)}</span></div>
   `).join("");
   box.innerHTML = rows + `<div class="row total"><span>Total</span><span>${fmt(cartTotal())}</span></div>`;
 }
@@ -1157,7 +1178,7 @@ function buildWhatsAppMessage(order){
   lines.push(``);
   lines.push(`*Itens:*`);
   order.itens.forEach(i => {
-    lines.push(`• ${i.qty}x ${i.nome} (${i.size} - ${i.ml}) — ${fmt(i.preco*i.qty)}`);
+    lines.push(`• ${i.qty}x ${i.nome} (${i.ml}) — ${fmt(i.preco*i.qty)}`);
   });
   lines.push(``);
   lines.push(`*Total: ${fmt(order.total)}*`);
@@ -1304,7 +1325,7 @@ function renderOrderDetail(order){
   const status = computeStatus(order);
   const dateStr = new Date(order.criadoEm).toLocaleString("pt-BR");
   const itemsHtml = order.itens.map(i => `
-    <div class="row"><span>${i.qty}x ${i.nome} (${i.size})</span><span>${fmt(i.preco*i.qty)}</span></div>
+    <div class="row"><span>${i.qty}x ${i.nome} (${i.ml})</span><span>${fmt(i.preco*i.qty)}</span></div>
   `).join("");
   return `
     <div class="track-result">
