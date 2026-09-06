@@ -1,8 +1,9 @@
 <html lang="pt-BR">
 <head>
+<base href="../">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pudim da Lud | Cardápio e Pedidos</title>
+<title>Cardápio | Pudim da Lud</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -99,6 +100,8 @@ header.site{
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
 .brand-logo{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(197,122,43,.35);box-shadow:0 3px 10px rgba(73,32,13,.12);}
 .brand-text{font-family:'Playfair Display',serif;font-size:23px;font-weight:700;color:var(--brown-deep);}
+.cardapio-page .hero,.cardapio-page .sizes-section{display:none;}
+.cardapio-page .menu-section{padding-top:52px;}
 nav.links{display:flex;gap:26px;align-items:center;}
 nav.links a{
   text-decoration:none;color:var(--brown);
@@ -517,7 +520,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
 }
 </style>
 </head>
-<body>
+<body class="cardapio-page">
 
 <!-- ============ HEADER ============ -->
 <header class="site">
