@@ -207,6 +207,20 @@ nav.links a:hover{border-color:var(--caramel);}
 
 /* ---------- Menu ---------- */
 .menu-section{padding:64px 0 40px;}
+.combo-card{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;margin:0 0 34px;padding:28px;background:linear-gradient(135deg,var(--brown-deep),#6f3b18);color:var(--cream);border:1px solid var(--gold);border-radius:20px;box-shadow:var(--shadow);}
+.combo-copy{display:flex;flex-direction:column;justify-content:center;}
+.combo-badge{align-self:flex-start;padding:6px 12px;border-radius:999px;background:var(--gold-light);color:var(--brown-deep);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+.combo-copy h3{color:#fff;font-size:30px;margin:12px 0 8px;}
+.combo-copy p{margin:0;color:#ead8bd;}
+.combo-price{display:flex;align-items:baseline;gap:10px;margin-top:18px;}
+.combo-price strong{font-family:'Playfair Display',serif;color:#fff;font-size:32px;}
+.combo-price span{font-size:14px;color:var(--gold-light);}
+.combo-builder{padding:20px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:16px;}
+.combo-builder label{display:block;margin-bottom:7px;color:#fff;font-size:14px;font-weight:600;}
+.combo-selects{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.combo-select{width:100%;padding:11px 12px;border:1px solid rgba(255,255,255,.35);border-radius:10px;background:var(--cream-2);color:var(--text);font:inherit;font-size:14px;}
+.combo-help{margin:10px 0 14px;color:#ead8bd;font-size:12.5px;}
+.combo-builder .add-btn{width:100%;justify-content:center;background:var(--caramel);}
 .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
 .flavor-card{
   background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
@@ -478,6 +492,9 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
   .sizes-grid{grid-template-columns:1fr;}
 }
 @media(max-width:640px){
+  .combo-card{grid-template-columns:1fr;padding:22px;gap:20px;}
+  .combo-copy h3{font-size:25px;}
+  .combo-selects{grid-template-columns:1fr;}
   .container{padding:0 18px;}
   .nav-wrap{padding:10px 18px;}
   .hero{padding:48px 0 40px;}
@@ -600,6 +617,20 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
       <p class="eyebrow">Cardápio</p>
       <h2>Nossos pudins</h2>
       <p>Selecione o tamanho e adicione ao carrinho. Você pode ajustar a quantidade antes de finalizar.</p>
+    </div>
+    <div class="combo-card" id="comboDegustacao">
+      <div class="combo-copy">
+        <span class="combo-badge">Oferta especial</span>
+        <h3>Combo Degustação</h3>
+        <p>Monte seu combo com 4 pudins de 120 ml e descubra seu sabor favorito.</p>
+        <div class="combo-price"><strong>R$ 49,99</strong><span>4 unidades de 120 ml</span></div>
+      </div>
+      <div class="combo-builder">
+        <label>Escolha os 4 sabores</label>
+        <div class="combo-selects" id="comboSelects"></div>
+        <p class="combo-help">Você pode repetir sabores. Ovomaltine: no máximo 1 unidade por combo.</p>
+        <button class="add-btn" id="addComboBtn">Adicionar combo ao carrinho</button>
+      </div>
     </div>
     <div class="menu-grid" id="menuGrid"></div>
   </div>
@@ -862,6 +893,9 @@ const FLAVORS = [
   { id:"cafe", nome:"Pudim de Café", desc:"A combinação perfeita entre pudim cremoso e café.", img:"assets/pudim-cafe-site.jpg", precos:{"80":10.99,"120":13.99,"250":25.99,"500":47.99,"1100":83.99} }
 ];
 
+const COMBO_PRICE = 49.99;
+const COMBO_DEFAULTS = ["tradicional", "maracuja", "chocolate", "leite-ninho"];
+
 /* =========================================================
    ESTADO
    ========================================================= */
@@ -876,6 +910,23 @@ function fmt(v){ return "R$ " + v.toFixed(2).replace(".", ","); }
    RENDER CARDÁPIO
    ========================================================= */
 const menuGrid = document.getElementById("menuGrid");
+
+const comboSelects = document.getElementById("comboSelects");
+const comboOptions = FLAVORS.map(f => `<option value="${f.id}">${f.nome}</option>`).join("");
+comboSelects.innerHTML = COMBO_DEFAULTS.map((id, index) => `
+  <select class="combo-select" aria-label="Sabor ${index + 1} do combo">${comboOptions}</select>
+`).join("");
+comboSelects.querySelectorAll(".combo-select").forEach((select, index) => { select.value = COMBO_DEFAULTS[index]; });
+
+document.getElementById("addComboBtn").addEventListener("click", () => {
+  const ids = [...comboSelects.querySelectorAll(".combo-select")].map(select => select.value);
+  if(ids.filter(id => id === "ovomaltine").length > 1){
+    showToast("Escolha no máximo 1 pudim de Ovomaltine no combo.");
+    return;
+  }
+  addComboToCart(ids.map(id => FLAVORS.find(f => f.id === id)));
+  showToast("Combo Degustação adicionado ao carrinho");
+});
 
 function renderMenu(){
   menuGrid.innerHTML = FLAVORS.map(f => {
@@ -958,6 +1009,18 @@ function addToCart(flavor, size){
   renderCart();
 }
 
+function addComboToCart(sabores){
+  const key = "combo-120-" + sabores.map(f => f.id).sort().join("-");
+  const existing = cart.find(i => i.key === key);
+  if(existing){
+    existing.qty += 1;
+  } else {
+    cart.push({ key, flavorId:"combo-degustacao", nome:"Combo Degustação", ml:"4 pudins de 120 ml", preco:COMBO_PRICE, qty:1, comboDetails:sabores.map(f => f.nome) });
+  }
+  saveCart();
+  renderCart();
+}
+
 function changeQty(key, delta){
   const item = cart.find(i => i.key === key);
   if(!item) return;
@@ -1007,7 +1070,7 @@ function renderCart(){
       </div>
       <div class="cart-item-info">
         <h4>${i.nome}</h4>
-        <div class="meta">${i.ml}</div>
+        <div class="meta">${i.ml}${i.comboDetails ? `<br>${i.comboDetails.join(" • ")}` : ""}</div>
         <div class="qty-row">
           <button class="qty-btn" data-dec="${i.key}">−</button>
           <span>${i.qty}</span>
@@ -1185,6 +1248,7 @@ function buildWhatsAppMessage(order){
   lines.push(`*Itens:*`);
   order.itens.forEach(i => {
     lines.push(`• ${i.qty}x ${i.nome} (${i.ml}) — ${fmt(i.preco*i.qty)}`);
+    if(i.comboDetails) lines.push(`  Sabores: ${i.comboDetails.join(", ")}`);
   });
   lines.push(``);
   lines.push(`*Total: ${fmt(order.total)}*`);
