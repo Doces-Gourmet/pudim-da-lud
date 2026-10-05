@@ -1,23 +1,27 @@
-# Pudim da Lud
+# Pudim da Lud — V2
 
-Projeto web publicado no GitHub para a loja Pudim da Lud.
+Projeto da loja Pudim da Lud no GitHub.
 
-## V1 publicada
-- Página inicial seguindo o protótipo aprovado
-- Cardápio responsivo
-- 8 sabores
-- 5 tamanhos
-- Gourmet: Maracujá, Limão Siciliano e Frutas Vermelhas
-- Carrinho
-- Checkout
-- Entrega/retirada
-- Registro de pedidos no navegador
-- Área ADM inicial
-- Painel de cozinha inicial
-- Base preparada para Firebase, Mercado Pago e WhatsApp Business
+## O que já existe
+- Loja responsiva com 8 sabores e 5 tamanhos.
+- Gourmet: Maracujá, Limão Siciliano e Frutas Vermelhas.
+- Carrinho e checkout com entrega/retirada.
+- Área ADM em `admin-v2.html`.
+- Painel da cozinha em `cozinha.html`.
+- Estrutura Firebase em `js/`.
+- Regras iniciais do Firestore em `firestore.rules`.
 
-## Atenção
-Esta V1 é um protótipo funcional frontend. O pagamento Mercado Pago, WhatsApp Business API, autenticação segura, banco de dados e permissões ainda precisam ser conectados em backend/Firebase antes de uso comercial.
+## Ativar Firebase
+O código já está preparado para Firebase, mas as credenciais do seu projeto precisam ser inseridas pelo proprietário do projeto. Use `js/firebase-config.example.js` como modelo e gere o arquivo local `js/firebase-config.js` com os dados do seu Web App Firebase.
 
-## Repositório
-Doces-Gourmet/pudim-da-lud
+1. Firebase Console → crie o projeto.
+2. Authentication → habilite Email/Password.
+3. Firestore Database → crie o banco.
+4. Cadastre o primeiro usuário no Authentication.
+5. Crie `usuarios/{UID}` com `role: "admin"` e `ativo: true`.
+6. Publique `firestore.rules`.
+
+Sem Firebase configurado, a loja continua funcionando em modo local para testes.
+
+## Próximas integrações
+Mercado Pago, WhatsApp Business, funcionários, promoções, cupons, delivery e PDF podem ser conectados ao mesmo banco.
