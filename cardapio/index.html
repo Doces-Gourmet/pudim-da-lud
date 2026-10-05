@@ -235,8 +235,17 @@ nav.links a:hover{border-color:var(--caramel);}
   margin:16px 22px 0;padding:14px;
   background:var(--cream);border:1px solid var(--line);border-radius:12px;
 }
-.size-block-label{display:block;font-size:12px;font-weight:600;color:var(--brown);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
-.size-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.size-block-label{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;
+  background:var(--cream-2);color:var(--brown-deep);cursor:pointer;
+  font-size:13px;font-weight:700;text-align:left;
+}
+.size-block-label:hover{border-color:var(--caramel);}
+.size-block-label .chevron{transition:transform .2s ease;flex-shrink:0;}
+.size-block-label[aria-expanded="true"] .chevron{transform:rotate(180deg);}
+.size-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.size-toggle[hidden]{display:none;}
 .size-opt{
   border:1.5px solid var(--line);border-radius:10px;
   padding:9px 6px;text-align:center;cursor:pointer;
@@ -899,6 +908,7 @@ function renderMenu(){
     const sizeButtons = Object.keys(SIZES).map(s => `
       <div class="size-opt ${selectedSize[f.id]===s?'active':''}" data-flavor="${f.id}" data-size="${s}">
         <strong>${SIZES[s].label}</strong>
+        <span>${fmt(f.precos[s])}</span>
       </div>
     `).join("");
     return `
@@ -913,8 +923,11 @@ function renderMenu(){
           <p>${f.desc}</p>
         </div>
         <div class="size-block">
-          <span class="size-block-label">Escolha o tamanho</span>
-          <div class="size-toggle" data-flavor-group="${f.id}">${sizeButtons}</div>
+          <button class="size-block-label" type="button" data-size-toggle="${f.id}" aria-expanded="false">
+            <span>Escolher tamanho</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="size-toggle" data-flavor-group="${f.id}" hidden>${sizeButtons}</div>
         </div>
         <div class="flavor-bottom">
           <span class="price-tag" id="price-${f.id}">${fmt(f.precos[selectedSize[f.id]])}</span>
@@ -935,6 +948,17 @@ menuGrid.addEventListener("click", (e) => {
     openLightbox(photoImg.src, photoImg.alt);
     return;
   }
+  const sizeTrigger = e.target.closest("[data-size-toggle]");
+  if(sizeTrigger){
+    const block = sizeTrigger.closest(".size-block");
+    const list = block.querySelector(".size-toggle");
+    const willOpen = list.hidden;
+    document.querySelectorAll(".size-toggle").forEach(el=>{ el.hidden = true; });
+    document.querySelectorAll("[data-size-toggle]").forEach(el=>el.setAttribute("aria-expanded", "false"));
+    list.hidden = !willOpen;
+    sizeTrigger.setAttribute("aria-expanded", String(willOpen));
+    return;
+  }
   const sizeOpt = e.target.closest(".size-opt");
   if(sizeOpt){
     const fid = sizeOpt.dataset.flavor;
@@ -945,6 +969,11 @@ menuGrid.addEventListener("click", (e) => {
     });
     const f = FLAVORS.find(x=>x.id===fid);
     document.getElementById(`price-${fid}`).textContent = fmt(f.precos[size]);
+    const block = sizeOpt.closest(".size-block");
+    const trigger = block.querySelector("[data-size-toggle]");
+    trigger.querySelector("span").textContent = `${SIZES[size].label} — ${fmt(f.precos[size])}`;
+    block.querySelector(".size-toggle").hidden = true;
+    trigger.setAttribute("aria-expanded", "false");
     return;
   }
   const addBtn = e.target.closest("[data-add]");
