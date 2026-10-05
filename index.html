@@ -215,6 +215,9 @@ nav.links a:hover{border-color:var(--caramel);}
   overflow:hidden;display:flex;flex-direction:column;
   box-shadow:var(--shadow-sm);
 }
+.flavor-card.gourmet{border:2px solid var(--gold);box-shadow:0 12px 32px rgba(203,154,68,.24);}
+.flavor-card.gourmet .flavor-info h3{color:var(--caramel);}
+.gourmet-badge{position:absolute;top:14px;left:14px;z-index:2;padding:7px 13px;border-radius:999px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--brown-deep);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 12px rgba(52,32,15,.22);}
 .flavor-photo{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--cream);position:relative;}
 .flavor-photo img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .2s ease;}
 .flavor-photo:hover img{transform:scale(1.04);}
@@ -863,8 +866,8 @@ const FLAVORS = [
   { id:"leite-ninho", nome:"Pudim de Leite Ninho", desc:"Leve, doce e com o sabor único do Leite Ninho.", img:"assets/pudim-leite-ninho-site.jpg", precos:{"80":9.99,"120":14.99,"250":27.99,"500":50.99,"1100":89.99} },
   { id:"ovomaltine", nome:"Pudim de Ovomaltine", desc:"Cremoso, chocolatudo e com o sabor marcante de Ovomaltine.", img:"assets/pudim-ovomaltine-site.jpg", precos:{"80":10.99,"120":15.99,"250":29.99,"500":54.99,"1100":96.99} },
   { id:"cafe", nome:"Pudim de Café", desc:"A combinação perfeita entre pudim cremoso e café.", img:"assets/pudim-cafe-site.jpg", precos:{"80":10.99,"120":13.99,"250":25.99,"500":47.99,"1100":83.99} },
-  { id:"limao-siciliano", nome:"Pudim de Limão Siciliano", desc:"Gourmet, cremoso e refrescante, com o sabor cítrico do limão siciliano.", img:"assets/pudim-limao-siciliano-site-v2.svg", precos:{"80":12.99,"120":17.99,"250":31.99,"500":56.99,"1100":98.99} },
-  { id:"frutas-vermelhas", nome:"Pudim de Frutas Vermelhas", desc:"Base de Leite Ninho com geleia de frutas vermelhas e pedaços de morango, mirtilo, amora e framboesa.", img:"assets/pudim-frutas-vermelhas-v3.jpg", precos:{"80":14.99,"120":19.99,"250":33.99,"500":58.99,"1100":100.99} }
+  { id:"limao-siciliano", gourmet:true, nome:"Pudim de Limão Siciliano", desc:"Gourmet, cremoso e refrescante, com o sabor cítrico do limão siciliano.", img:"assets/pudim-limao-siciliano-site-v2.svg", precos:{"80":12.99,"120":17.99,"250":31.99,"500":56.99,"1100":98.99} },
+  { id:"frutas-vermelhas", gourmet:true, nome:"Pudim de Frutas Vermelhas", desc:"Base de Leite Ninho com geleia de frutas vermelhas e pedaços de morango, mirtilo, amora e framboesa.", img:"assets/pudim-frutas-vermelhas-v3.jpg", precos:{"80":14.99,"120":19.99,"250":33.99,"500":58.99,"1100":100.99} }
 ];
 
 /* =========================================================
@@ -891,9 +894,10 @@ function renderMenu(){
       </div>
     `).join("");
     return `
-      <div class="flavor-card">
+      <div class="flavor-card${f.gourmet ? ' gourmet' : ''}">
         <div class="flavor-photo${f.indisponivel ? ' is-unavailable' : ''}">
           <img src="${f.img}" alt="${f.nome}" loading="lazy">
+          ${f.gourmet ? '<span class="gourmet-badge">Pudim Gourmet</span>' : ''}
           ${f.indisponivel ? '<div class="unavailable-overlay"><span>Indisponível no momento</span></div>' : ''}
         </div>
         <div class="flavor-info">
