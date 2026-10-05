@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function admin() {
+      return signedIn() &&
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.role == 'admin';
+    }
+    match /pedidos/{id} {
+      allow create: if true;
+      allow read, update: if signedIn();
+      allow delete: if admin();
+    }
+    match /usuarios/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || admin());
+      allow create: if signedIn() && request.auth.uid == uid;
+      allow update: if admin() || request.auth.uid == uid;
+      allow delete: if admin();
+    }
+    match /produtos/{id} {
+      allow read: if true;
+      allow write: if admin();
+    }
+    match /config/{id} {
+      allow read: if true;
+      allow write: if admin();
+    }
+  }
+}
