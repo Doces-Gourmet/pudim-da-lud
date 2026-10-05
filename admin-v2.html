@@ -9,7 +9,15 @@ import {configured,db,collection,getDocs,query,orderBy} from "./firebase-app.js"
 import {login,logout,watchAuth} from "./auth.js";
 const money=v=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(v);
 mode.textContent=configured?"Firebase conectado.":"Firebase não configurado: o painel usa o navegador local.";
-entrar.onclick=async()=>{try{await login(email.value,senha.value);show()}catch(e){erro.textContent=e.message}};
+entrar.onclick=async()=>{
+ try{
+  if(!configured){
+   if(email.value==="admin@pudimdalud.com"&&senha.value==="123456"){localStorage.setItem("pudim_admin","1");show();return}
+   throw new Error("Firebase não configurado. No modo de teste use admin@pudimdalud.com / 123456.");
+  }
+  await login(email.value,senha.value);show()
+ }catch(e){erro.textContent=e.message}
+};
 sair.onclick=async()=>{await logout();location.reload()};
 function show(){loginBox.style.display="none";app.style.display="block";load()}
 async function load(){let p=[];if(configured){const s=await getDocs(query(collection(db,"pedidos"),orderBy("criadoEm","desc")));p=s.docs.map(x=>({id:x.id,...x.data()}));}else p=JSON.parse(localStorage.getItem("pudim_pedidos")||"[]");const fat=p.reduce((a,x)=>a+(x.total||0),0);pedidos.textContent=p.length;faturamento.textContent=money(fat);ticket.textContent=money(p.length?fat/p.length:0);clientes.textContent=new Set(p.map(x=>x.whatsapp).filter(Boolean)).size;lista.innerHTML=p.map(x=>'<div class="order"><b>#'+(x.numero||x.id)+'</b> · '+(x.nome||"Cliente")+' · '+money(x.total||0)+' · <span class="pill">'+(x.status||"Recebido")+'</span><br><small>'+((x.tipo||"").toUpperCase())+' · '+(x.whatsapp||"")+'</small></div>').join("")||"<p>Nenhum pedido.</p>"}
