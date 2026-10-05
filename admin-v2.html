@@ -1,0 +1,17 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADM | Pudim da Lud</title><style>
+body{margin:0;background:#fff8ee;color:#54270b;font-family:Arial,sans-serif}header{padding:16px 5%;background:#fff;border-bottom:1px solid #ead8bd;display:flex;justify-content:space-between}main{max-width:1100px;margin:30px auto;padding:0 18px}.box{background:#fff;border:1px solid #ead8bd;border-radius:18px;padding:22px;margin-bottom:18px}input,select{padding:11px;border:1px solid #ead8bd;border-radius:8px;width:100%;box-sizing:border-box;margin:6px 0 12px}button{padding:11px 16px;border:0;border-radius:8px;background:#54270b;color:#fff;cursor:pointer}.danger{background:#9b2c2c}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric{border:1px solid #ead8bd;border-radius:12px;padding:18px}.metric strong{display:block;font-size:25px;margin-top:7px}.order{border-top:1px solid #ead8bd;padding:15px 0}.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#f0dfbd;font-size:12px}@media(max-width:700px){.grid{grid-template-columns:1fr 1fr}}</style></head>
+<body><header><strong>Pudim da Lud · ADM</strong><span><a href="index.html">Loja</a> · <a href="cozinha.html">Cozinha</a></span></header><main>
+<div class="box" id="loginBox"><h1>Entrar</h1><p id="mode"></p><input id="email" placeholder="E-mail"><input id="senha" type="password" placeholder="Senha"><button id="entrar">Entrar</button><p id="erro"></p></div>
+<div id="app" style="display:none"><div class="box"><h1>Dashboard</h1><div class="grid"><div class="metric">Pedidos<strong id="pedidos">0</strong></div><div class="metric">Faturamento<strong id="faturamento">R$ 0,00</strong></div><div class="metric">Ticket médio<strong id="ticket">R$ 0,00</strong></div><div class="metric">Clientes<strong id="clientes">0</strong></div></div></div>
+<div class="box"><h2>Pedidos recentes</h2><div id="lista"></div></div><div class="box"><button class="danger" id="sair">Sair</button></div></div>
+</main><script type="module">
+import {configured,db,collection,getDocs,query,orderBy} from "./firebase-app.js";
+import {login,logout,watchAuth} from "./auth.js";
+const money=v=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(v);
+mode.textContent=configured?"Firebase conectado.":"Firebase não configurado: o painel usa o navegador local.";
+entrar.onclick=async()=>{try{await login(email.value,senha.value);show()}catch(e){erro.textContent=e.message}};
+sair.onclick=async()=>{await logout();location.reload()};
+function show(){loginBox.style.display="none";app.style.display="block";load()}
+async function load(){let p=[];if(configured){const s=await getDocs(query(collection(db,"pedidos"),orderBy("criadoEm","desc")));p=s.docs.map(x=>({id:x.id,...x.data()}));}else p=JSON.parse(localStorage.getItem("pudim_pedidos")||"[]");const fat=p.reduce((a,x)=>a+(x.total||0),0);pedidos.textContent=p.length;faturamento.textContent=money(fat);ticket.textContent=money(p.length?fat/p.length:0);clientes.textContent=new Set(p.map(x=>x.whatsapp).filter(Boolean)).size;lista.innerHTML=p.map(x=>'<div class="order"><b>#'+(x.numero||x.id)+'</b> · '+(x.nome||"Cliente")+' · '+money(x.total||0)+' · <span class="pill">'+(x.status||"Recebido")+'</span><br><small>'+((x.tipo||"").toUpperCase())+' · '+(x.whatsapp||"")+'</small></div>').join("")||"<p>Nenhum pedido.</p>"}
+watchAuth(u=>{if(u)show()});
+</script></body></html>
