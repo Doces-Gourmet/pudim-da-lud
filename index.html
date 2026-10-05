@@ -87,4 +87,18 @@ function toggleDelivery(){document.getElementById('delivery').style.display=docu
 function submitOrder(){if(!cart.length){alert('Adicione pelo menos um pudim ao carrinho.');return}const pedido={numero:Date.now().toString().slice(-6),nome:document.getElementById('nome').value,whatsapp:document.getElementById('whats').value,tipo:document.getElementById('tipo').value,endereco:document.getElementById('endereco').value,bairro:document.getElementById('bairro').value,cidade:document.getElementById('cidade').value,observacao:document.getElementById('obs').value,itens:cart,total:cart.reduce((s,x)=>s+x.price*x.q,0)+(document.getElementById('tipo').value==='entrega'?6:0),status:'Recebido',data:new Date().toISOString()};const all=JSON.parse(localStorage.getItem('pudim_pedidos')||'[]');all.unshift(pedido);localStorage.setItem('pudim_pedidos',JSON.stringify(all));alert('Pedido #'+pedido.numero+' recebido! Nesta V1 o pagamento online e o WhatsApp Business ficam como próxima integração.');cart=[];save();window.scrollTo({top:0,behavior:'smooth'})}
 render();update();toggleDelivery();
 </script>
-</body></html>
+<script type="module">
+import { salvarPedido } from "./js/pedidos.js";
+const antigoSubmit=window.submitOrder;
+window.submitOrder=async function(){
+  if(!cart.length){alert("Adicione pelo menos um pudim ao carrinho.");return}
+  const tipo=document.getElementById("tipo").value;
+  const pedido={numero:Date.now().toString().slice(-6),nome:document.getElementById("nome").value,whatsapp:document.getElementById("whats").value,tipo,endereco:document.getElementById("endereco").value,bairro:document.getElementById("bairro").value,cidade:document.getElementById("cidade").value,observacao:document.getElementById("obs").value,itens:cart,total:cart.reduce((s,x)=>s+x.price*x.q,0)+(tipo==="entrega"?6:0),status:"Recebido",data:new Date().toISOString()};
+  if(!pedido.nome || !pedido.whatsapp){alert("Informe nome e WhatsApp.");return}
+  try{
+    const r=await salvarPedido(pedido);
+    alert("Pedido #"+pedido.numero+" recebido!"+(r.online?"\nPedido salvo no sistema.":"\nModo teste local ativo."));
+    cart=[];save();window.scrollTo({top:0,behavior:"smooth"});
+  }catch(e){alert("Não foi possível registrar o pedido: "+e.message)}
+}
+</script></body></html>
