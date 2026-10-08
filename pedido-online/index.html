@@ -53,14 +53,14 @@
     // Atualize este número se o WhatsApp comercial mudar. Formato internacional, sem + ou espaços.
     const WHATSAPP_NUMBER = '5562986516120';
     const products = [
+      {name:'Frutas Vermelhas',category:'Opções gourmet',image:'../assets/pudim-frutas-vermelhas-v3.jpg',desc:'Base cremosa de Leite Ninho com calda de frutas vermelhas e pedaços de morango, mirtilo, amora e framboesa.',prices:{'80 ml':14.99,'150 ml':19.99,'250 ml':33.99,'500 ml':58.99,'1.100 ml':100.99}},
+      {name:'Limão Siciliano',category:'Opções gourmet',image:'../assets/pudim-limao-siciliano-site-v2.svg',artTone:'lemon',artIcon:'🍋',desc:'Cremoso e refrescante, com o toque cítrico e aromático do limão siciliano.',prices:{'80 ml':12.99,'150 ml':17.99,'250 ml':31.99,'500 ml':56.99,'1.100 ml':98.99}},
       {name:'Tradicional',category:'Clássicos',image:'../assets/pudim-tradicional-site.jpg',desc:'Nosso clássico de leite condensado: textura lisa, cremosa e finalizada com calda de caramelo.',prices:{'80 ml':6.99,'150 ml':11.99,'250 ml':21.99,'500 ml':39.99,'1.100 ml':69.99}},
       {name:'Café',category:'Especiais',image:'../assets/pudim-cafe-site.svg',desc:'Cremoso e aromático, com aquele toque de café que deixa cada colherada especial.',prices:{'80 ml':10.99,'150 ml':13.99,'250 ml':25.99,'500 ml':47.99,'1.100 ml':83.99}},
       {name:'Chocolate 50% cacau',category:'Especiais',image:'../assets/pudim-chocolate-site.svg',desc:'Sabor marcante de chocolate 50% cacau em uma textura cremosa e irresistível.',prices:{'80 ml':8.99,'150 ml':13.99,'250 ml':25.99,'500 ml':46.99,'1.100 ml':81.99}},
       {name:'Leite Ninho',category:'Especiais',image:'../assets/pudim-leite-ninho-site.svg',desc:'Pudim delicado e cremoso com o sabor querido do leite em pó.',prices:{'80 ml':9.99,'150 ml':14.99,'250 ml':27.99,'500 ml':50.99,'1.100 ml':89.99}},
       {name:'Ovomaltine',category:'Especiais',image:'../assets/pudim-ovomaltine-site-v2.svg',desc:'Uma combinação cremosa com o sabor inconfundível de Ovomaltine.',prices:{'80 ml':10.99,'150 ml':15.99,'250 ml':29.99,'500 ml':54.99,'1.100 ml':96.99}},
-      {name:'Maracujá',category:'Especiais',image:'../assets/pudim-maracuja-site-v2.svg',desc:'Leve, cremoso e com o toque azedinho do maracujá.',prices:{'80 ml':6.99,'150 ml':12.99,'250 ml':23.99,'500 ml':43.99,'1.100 ml':76.99}},
-      {name:'Limão Siciliano',category:'Opções gourmet',image:'../assets/pudim-limao-siciliano-site-v2.svg',artTone:'lemon',artIcon:'🍋',desc:'Cremoso e refrescante, com o toque cítrico e aromático do limão siciliano.',prices:{'80 ml':12.99,'150 ml':17.99,'250 ml':31.99,'500 ml':56.99,'1.100 ml':98.99}},
-      {name:'Frutas Vermelhas',category:'Opções gourmet',image:'../assets/pudim-frutas-vermelhas-v3.jpg',desc:'Base cremosa de Leite Ninho com calda de frutas vermelhas e pedaços de morango, mirtilo, amora e framboesa.',prices:{'80 ml':14.99,'150 ml':19.99,'250 ml':33.99,'500 ml':58.99,'1.100 ml':100.99}}
+      {name:'Maracujá',category:'Especiais',image:'../assets/pudim-maracuja-site-v2.svg',desc:'Leve, cremoso e com o toque azedinho do maracujá.',prices:{'80 ml':6.99,'150 ml':12.99,'250 ml':23.99,'500 ml':43.99,'1.100 ml':76.99}}
     ];
     const money=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
     const categories=['Todos','Clássicos','Especiais','Opções gourmet']; let category='Todos',query='',selected=null,cart=[];
