@@ -142,7 +142,8 @@
     noveltyDots.forEach(dot=>dot.addEventListener('click',()=>{showNovelty(+dot.dataset.noveltyDot);startNovelty()}));
     noveltyPause.addEventListener('click',()=>{noveltyPaused=!noveltyPaused;noveltyPause.textContent=noveltyPaused?'▶':'Ⅱ';noveltyPause.setAttribute('aria-label',noveltyPaused?'Reproduzir novidades':'Pausar novidades');startNovelty()});
     const noveltyCarousel=document.querySelector('.novelty');noveltyCarousel.addEventListener('mouseenter',()=>clearInterval(noveltyTimer));noveltyCarousel.addEventListener('mouseleave',startNovelty);noveltyCarousel.addEventListener('focusin',()=>clearInterval(noveltyTimer));noveltyCarousel.addEventListener('focusout',startNovelty);startNovelty();
-\n    renderFilters();renderProducts();renderCartButton();
+
+    renderFilters();renderProducts();renderCartButton();
   </script>
 </body>
 </html>
