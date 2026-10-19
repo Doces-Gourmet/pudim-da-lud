@@ -239,7 +239,10 @@ nav.links a:hover{border-color:var(--caramel);}
 }
 .flavor-card.gourmet{border:2px solid var(--gold);box-shadow:0 12px 32px rgba(203,154,68,.24);}
 .flavor-card.gourmet .flavor-info h3{color:var(--caramel);}
+.flavor-card.featured{border:2px solid #A92F44;box-shadow:0 12px 32px rgba(169,47,68,.18);}
+.flavor-card.featured .flavor-info h3{color:#8C2639;}
 .gourmet-badge{position:absolute;top:14px;left:14px;z-index:2;padding:7px 13px;border-radius:999px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--brown-deep);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 12px rgba(52,32,15,.22);}
+.new-badge{position:absolute;top:14px;left:14px;z-index:2;padding:7px 13px;border-radius:999px;background:linear-gradient(135deg,#C94B62,#8C2639);color:#fff;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 12px rgba(52,32,15,.22);}
 .flavor-photo{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--cream);position:relative;}
 .flavor-photo img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .2s ease;}
 .flavor-photo:hover img{transform:scale(1.04);}
@@ -950,6 +953,7 @@ const SIZES = {
 const FLAVORS = [
   { id:"limao-siciliano", gourmet:true, nome:"Pudim de Limão Siciliano", desc:"Gourmet, cremoso e refrescante, com o sabor cítrico do limão siciliano.", img:"assets/pudim-limao-siciliano-site-v2.svg", precos:{"80":12.99,"150":17.99,"250":31.99,"500":56.99,"1100":98.99} },
   { id:"frutas-vermelhas", gourmet:true, nome:"Pudim de Frutas Vermelhas", desc:"Base de Leite Ninho com geleia de frutas vermelhas e pedaços de morango, mirtilo, amora e framboesa.", img:"assets/pudim-frutas-vermelhas-v3.jpg", precos:{"80":14.99,"150":19.99,"250":33.99,"500":58.99,"1100":100.99} },
+  { id:"geleia-frutas-vermelhas", novidade:true, nome:"Geleia de Frutas Vermelhas", desc:"Geleia artesanal com morango, framboesa, amora e mirtilo. Pote com 270 g.", img:"assets/geleia-frutas-vermelhas-270g.jpg", defaultSize:"270", sizeLabels:{"270":"270 g"}, precos:{"270":30.00} },
   { id:"tradicional", nome:"Pudim Tradicional", desc:"Clássico, cremoso e irresistível.", img:"assets/pudim-tradicional-site.jpg", precos:{"80":6.99,"150":11.99,"250":21.99,"500":39.99,"1100":69.99} },
   { id:"maracuja", nome:"Pudim de Maracujá", desc:"Cremoso, equilibrado e com o toque tropical do maracujá.", img:"assets/pudim-maracuja-site.jpg", precos:{"80":6.99,"150":12.99,"250":23.99,"500":43.99,"1100":76.99} },
   { id:"chocolate", nome:"Pudim de Chocolate 50% Cacau", desc:"Sabor intenso de chocolate em uma textura super cremosa.", img:"assets/pudim-chocolate-site.jpg", precos:{"80":8.99,"150":13.99,"250":25.99,"500":46.99,"1100":81.99} },
@@ -969,6 +973,9 @@ let selectedPay = "";
 
 function saveCart(){ localStorage.setItem("pudimLudCart", JSON.stringify(cart)); }
 function fmt(v){ return "R$ " + v.toFixed(2).replace(".", ","); }
+function getSizeLabel(flavor, size){
+  return flavor.sizeLabels?.[size] || SIZES[size]?.label || size;
+}
 
 /* =========================================================
    RENDER CARDÁPIO
@@ -977,18 +984,19 @@ const menuGrid = document.getElementById("menuGrid");
 
 function renderMenu(){
   menuGrid.innerHTML = FLAVORS.map(f => {
-    if(!selectedSize[f.id]) selectedSize[f.id] = "250";
-    const sizeButtons = Object.keys(SIZES).map(s => `
+    if(!selectedSize[f.id]) selectedSize[f.id] = f.defaultSize || "250";
+    const sizeButtons = Object.keys(f.precos).map(s => `
       <div class="size-opt ${selectedSize[f.id]===s?'active':''}" data-flavor="${f.id}" data-size="${s}">
-        <strong>${SIZES[s].label}</strong>
+        <strong>${getSizeLabel(f, s)}</strong>
         <span>${fmt(f.precos[s])}</span>
       </div>
     `).join("");
     return `
-      <div class="flavor-card${f.gourmet ? ' gourmet' : ''}">
+      <div class="flavor-card${f.gourmet ? ' gourmet' : ''}${f.novidade ? ' featured' : ''}">
         <div class="flavor-photo${f.indisponivel ? ' is-unavailable' : ''}">
           <img src="${f.img}" alt="${f.nome}" loading="lazy">
           ${f.gourmet ? '<span class="gourmet-badge">Pudim Gourmet</span>' : ''}
+          ${f.novidade ? '<span class="new-badge">Novidade</span>' : ''}
           ${f.indisponivel ? '<div class="unavailable-overlay"><span>Indisponível no momento</span></div>' : ''}
         </div>
         <div class="flavor-info">
@@ -997,7 +1005,7 @@ function renderMenu(){
         </div>
         <div class="size-block">
           <button class="size-block-label" type="button" data-size-toggle="${f.id}" aria-expanded="false">
-            <span>Escolher tamanho</span>
+            <span>${f.defaultSize ? `Pote de ${getSizeLabel(f, selectedSize[f.id])}` : 'Escolher tamanho'}</span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="size-toggle" data-flavor-group="${f.id}" hidden>${sizeButtons}</div>
@@ -1044,7 +1052,7 @@ menuGrid.addEventListener("click", (e) => {
     document.getElementById(`price-${fid}`).textContent = fmt(f.precos[size]);
     const block = sizeOpt.closest(".size-block");
     const trigger = block.querySelector("[data-size-toggle]");
-    trigger.querySelector("span").textContent = `${SIZES[size].label} — ${fmt(f.precos[size])}`;
+    trigger.querySelector("span").textContent = `${getSizeLabel(f, size)} — ${fmt(f.precos[size])}`;
     block.querySelector(".size-toggle").hidden = true;
     trigger.setAttribute("aria-expanded", "false");
     return;
@@ -1058,7 +1066,7 @@ menuGrid.addEventListener("click", (e) => {
     addToCart(f, size);
     addBtn.classList.add("add-flash");
     setTimeout(()=>addBtn.classList.remove("add-flash"), 500);
-    showToast(`${f.nome} (${size}) adicionado ao carrinho`);
+    showToast(`${f.nome} (${getSizeLabel(f, size)}) adicionado ao carrinho`);
   }
 });
 
@@ -1071,7 +1079,7 @@ function addToCart(flavor, size){
   if(existing){
     existing.qty += 1;
   } else {
-    cart.push({ key, flavorId:flavor.id, nome:flavor.nome, size, ml:SIZES[size].label, preco:flavor.precos[size], qty:1 });
+    cart.push({ key, flavorId:flavor.id, nome:flavor.nome, size, ml:getSizeLabel(flavor, size), preco:flavor.precos[size], qty:1 });
   }
   saveCart();
   renderCart();
