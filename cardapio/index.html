@@ -216,6 +216,10 @@ nav.links a:hover{border-color:var(--caramel);}
 
 /* ---------- Menu ---------- */
 .menu-section{padding:64px 0 40px;}
+.catalog-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:680px;margin:0 auto 30px;}
+.catalog-tab{display:flex;align-items:center;justify-content:center;gap:9px;padding:13px 18px;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);color:var(--brown-deep);font-weight:700;font-size:15px;cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .18s,background .18s,color .18s,transform .18s;}
+.catalog-tab:hover{border-color:var(--caramel);transform:translateY(-1px);}
+.catalog-tab.active{background:var(--caramel);border-color:var(--caramel);color:#fff;}
 .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
 .flavor-card{
   background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
@@ -627,9 +631,13 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Cardápio</p>
-      <h2>Nossos pudins</h2>
+      <h2 id="catalogTitle">Nossos pudins</h2>
       <p class="order-notice"><strong>Feitos sob encomenda.</strong><br>O prazo de entrega será confirmado via WhatsApp.</p>
-      <p>Selecione o tamanho e adicione ao carrinho. Você pode ajustar a quantidade antes de finalizar.</p>
+      <p id="catalogDescription">Selecione o tamanho e adicione ao carrinho. Você pode ajustar a quantidade antes de finalizar.</p>
+    </div>
+    <div class="catalog-tabs" id="catalogTabs" aria-label="Escolha o catálogo">
+      <button class="catalog-tab active" type="button" data-catalog="pudins" aria-pressed="true"><span aria-hidden="true">🍮</span> Pudins</button>
+      <button class="catalog-tab" type="button" data-catalog="geleias" aria-pressed="false"><span aria-hidden="true">🍓</span> Geleias</button>
     </div>
     <div class="menu-grid" id="menuGrid"></div>
   </div>
@@ -903,6 +911,7 @@ let cart = JSON.parse(localStorage.getItem("pudimLudCart") || "[]")
   .map(item => item.size === "120" ? {...item, size:"150", ml:"150 ml", key:item.flavorId + "-150"} : item);
 let selectedSize = {}; // sabor.id -> "80"/"250"/"500"/"1100" escolhido no card antes de adicionar
 let selectedPay = "";
+let activeCatalog = "pudins";
 
 function saveCart(){ localStorage.setItem("pudimLudCart", JSON.stringify(cart)); }
 function fmt(v){ return "R$ " + v.toFixed(2).replace(".", ","); }
@@ -916,7 +925,8 @@ function getSizeLabel(flavor, size){
 const menuGrid = document.getElementById("menuGrid");
 
 function renderMenu(){
-  menuGrid.innerHTML = FLAVORS.map(f => {
+  const visibleFlavors = FLAVORS.filter(f => activeCatalog === "geleias" ? f.id.startsWith("geleia-") : !f.id.startsWith("geleia-"));
+  menuGrid.innerHTML = visibleFlavors.map(f => {
     if(!selectedSize[f.id]) selectedSize[f.id] = f.defaultSize || "250";
     const sizeButtons = Object.keys(f.precos).map(s => `
       <div class="size-opt ${selectedSize[f.id]===s?'active':''}" data-flavor="${f.id}" data-size="${s}">
@@ -955,6 +965,22 @@ function renderMenu(){
   }).join("");
 }
 renderMenu();
+
+document.getElementById("catalogTabs").addEventListener("click", (e) => {
+  const tab = e.target.closest("[data-catalog]");
+  if(!tab) return;
+  activeCatalog = tab.dataset.catalog;
+  document.querySelectorAll("[data-catalog]").forEach(button => {
+    const isActive = button === tab;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  document.getElementById("catalogTitle").textContent = activeCatalog === "pudins" ? "Nossos pudins" : "Nossas geleias";
+  document.getElementById("catalogDescription").textContent = activeCatalog === "pudins"
+    ? "Selecione o tamanho e adicione ao carrinho. Você pode ajustar a quantidade antes de finalizar."
+    : "Escolha sua geleia artesanal e adicione ao carrinho.";
+  renderMenu();
+});
 
 menuGrid.addEventListener("click", (e) => {
   const photoImg = e.target.closest(".flavor-photo img");
