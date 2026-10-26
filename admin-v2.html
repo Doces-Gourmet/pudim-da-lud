@@ -5,8 +5,8 @@ body{margin:0;background:#fff8ee;color:#54270b;font-family:Arial,sans-serif}head
 <div id="app" style="display:none"><div class="box"><h1>Dashboard</h1><div class="grid"><div class="metric">Pedidos<strong id="pedidos">0</strong></div><div class="metric">Faturamento<strong id="faturamento">R$ 0,00</strong></div><div class="metric">Ticket médio<strong id="ticket">R$ 0,00</strong></div><div class="metric">Clientes<strong id="clientes">0</strong></div></div></div>
 <div class="box"><h2>Pedidos recentes</h2><div id="lista"></div></div><div class="box"><button class="danger" id="sair">Sair</button></div></div>
 </main><script type="module">
-import {configured,db,collection,getDocs,query,orderBy} from "./firebase-app.js";
-import {login,logout,watchAuth} from "./auth.js";
+import {configured,db,collection,getDocs,query,orderBy} from "./js/firebase-app.js";
+import {login,logout,watchAuth} from "./js/auth.js";
 const money=v=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(v);
 mode.textContent=configured?"Firebase conectado.":"Firebase não configurado: o painel usa o navegador local.";
 entrar.onclick=async()=>{
