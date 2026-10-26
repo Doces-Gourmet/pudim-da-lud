@@ -143,10 +143,7 @@ nav.links a:hover{border-color:var(--caramel);}
   position:relative;
   overflow:hidden;
   padding:72px 0 60px;
-  background:
-    radial-gradient(circle at 88% 18%, rgba(203,154,68,0.28), transparent 45%),
-    radial-gradient(circle at 8% 90%, rgba(201,122,43,0.20), transparent 40%),
-    var(--cream);
+  background:var(--cream);
 }
 .hero-grid{
   display:block;max-width:640px;
@@ -160,7 +157,7 @@ nav.links a:hover{border-color:var(--caramel);}
 .hero-grid{position:relative;z-index:1;}
 
 /* ---------- Sizes strip ---------- */
-.sizes-section{padding:56px 0;background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.sizes-section{padding:56px 0;background:var(--cream);border-top:0;border-bottom:0;}
 .section-head{text-align:center;max-width:620px;margin:0 auto 40px;}
 .section-head h2{font-size:clamp(26px,3.2vw,36px);margin-top:10px;}
 .section-head p{color:var(--text-soft);margin-top:12px;font-size:15.5px;}
@@ -279,21 +276,21 @@ nav.links a:hover{border-color:var(--caramel);}
 @keyframes flash{0%{transform:scale(1);}30%{transform:scale(0.94);}100%{transform:scale(1);}}
 
 /* ---------- How it works ---------- */
-.how-section{padding:60px 0;background:var(--brown-deep);color:var(--cream);}
-.how-section .section-head h2{color:var(--cream);}
-.how-section .section-head p{color:#D9C6AC;}
+.how-section{padding:60px 0;background:var(--cream);color:var(--text);}
+.how-section .section-head h2{color:var(--brown-deep);}
+.how-section .section-head p{color:var(--text-soft);}
 .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
 .how-card{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(231,199,131,0.25);
+  background:var(--paper);
+  border:1px solid var(--line);
   border-radius:var(--radius);
   padding:22px;
 }
 .how-card .num{
-  font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-light);font-weight:700;
+  font-family:'Playfair Display',serif;font-size:26px;color:var(--caramel);font-weight:700;
 }
-.how-card h4{color:var(--cream);margin:10px 0 6px;font-size:16px;font-family:'Jost',sans-serif;font-weight:600;}
-.how-card p{color:#CBB693;font-size:13.5px;margin:0;}
+.how-card h4{color:var(--brown-deep);margin:10px 0 6px;font-size:16px;font-family:'Jost',sans-serif;font-weight:600;}
+.how-card p{color:var(--text-soft);font-size:13.5px;margin:0;}
 
 /* ---------- Pickup / address ---------- */
 .pickup-section{padding:64px 0;}
