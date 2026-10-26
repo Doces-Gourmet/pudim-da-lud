@@ -28,9 +28,9 @@
   --caramel:      #C97A2B;
   --gold:         #CB9A44;
   --gold-light:   #E7C783;
-  --cream:        #FBF3E4;
-  --cream-2:      #FFFDF8;
-  --paper:        #FFFFFF;
+  --cream:        #FFF8ED;
+  --cream-2:      #FFFDF9;
+  --paper:        #FFFEFB;
   --text:         #2E1B0F;
   --text-soft:    #6E5A47;
   --line:         #E7D8BE;
@@ -47,7 +47,10 @@ html{scroll-behavior:smooth;}
 body{
   margin:0;
   font-family:'Jost',sans-serif;
-  background:var(--cream);
+  background-color:var(--cream);
+  background-image:
+    radial-gradient(circle at 85% 10%, rgba(245,158,11,.10), transparent 30%),
+    radial-gradient(circle at 10% 85%, rgba(146,64,14,.06), transparent 28%);
   color:var(--text);
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
@@ -94,7 +97,7 @@ button{font-family:inherit;}
 /* ---------- Header ---------- */
 header.site{
   position:sticky;top:0;z-index:40;
-  background:rgba(251,243,228,0.92);
+  background:rgba(255,248,237,0.92);
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
 }
@@ -143,7 +146,7 @@ nav.links a:hover{border-color:var(--caramel);}
   position:relative;
   overflow:hidden;
   padding:72px 0 60px;
-  background:var(--cream);
+  background:transparent;
 }
 .hero-grid{
   display:block;max-width:640px;
@@ -157,7 +160,7 @@ nav.links a:hover{border-color:var(--caramel);}
 .hero-grid{position:relative;z-index:1;}
 
 /* ---------- Sizes strip ---------- */
-.sizes-section{padding:56px 0;background:var(--cream);border-top:0;border-bottom:0;}
+.sizes-section{padding:56px 0;background:transparent;border-top:0;border-bottom:0;}
 .section-head{text-align:center;max-width:620px;margin:0 auto 40px;}
 .section-head h2{font-size:clamp(26px,3.2vw,36px);margin-top:10px;}
 .section-head p{color:var(--text-soft);margin-top:12px;font-size:15.5px;}
@@ -280,7 +283,7 @@ nav.links a:hover{border-color:var(--caramel);}
 @keyframes flash{0%{transform:scale(1);}30%{transform:scale(0.94);}100%{transform:scale(1);}}
 
 /* ---------- How it works ---------- */
-.how-section{padding:60px 0;background:var(--cream);color:var(--text);}
+.how-section{padding:60px 0;background:transparent;color:var(--text);}
 .how-section .section-head h2{color:var(--brown-deep);}
 .how-section .section-head p{color:var(--text-soft);}
 .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
