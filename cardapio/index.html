@@ -562,11 +562,7 @@ footer{background:var(--brown-deep);color:#CBB693;padding:44px 0 26px;font-size:
     <nav class="links" id="navLinks">
       <a href="cardapio/">Cardápio</a>
       <a href="./#quem-somos">Quem somos</a>
-      <a href="#tamanhos">Tamanhos</a>
-      <a href="#como-funciona">Como funciona</a>
-      <a href="#retirada">Retirada</a>
-      <a href="#entrega-info">Entrega</a>
-      <a href="#" id="navWhats">WhatsApp</a>
+      <a href="pedido-online/">Encomendas</a>
     </nav>
     <div class="header-actions">
       <button class="icon-btn" id="cartBtnHeader" title="Ver carrinho" aria-label="Ver carrinho">
@@ -1166,11 +1162,6 @@ document.getElementById("footerWhats").onclick = (e)=>{
   e.preventDefault();
   window.open(`https://wa.me/${CONFIG.whatsappNumber}`, "_blank");
 };
-document.getElementById("navWhats").onclick = (e)=>{
-  e.preventDefault();
-  window.open(`https://wa.me/${CONFIG.whatsappNumber}`, "_blank");
-};
-
 /* Menu mobile */
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
