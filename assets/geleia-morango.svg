@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Geleia artesanal de morango</title>
+  <desc id="desc">Pote de geleia vermelha cercado por morangos</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff8e8"/><stop offset="1" stop-color="#f5d9a6"/></linearGradient>
+    <linearGradient id="jam" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ef3047"/><stop offset=".55" stop-color="#b70f2e"/><stop offset="1" stop-color="#760719"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fff" stop-opacity=".52"/><stop offset=".22" stop-color="#fff" stop-opacity=".08"/><stop offset=".75" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#fff" stop-opacity=".34"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#3b1d08" flood-opacity=".24"/></filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="400" cy="520" rx="250" ry="34" fill="#7a3c16" opacity=".17"/>
+  <g filter="url(#shadow)">
+    <rect x="238" y="120" width="324" height="390" rx="70" fill="url(#jam)" stroke="#6f0d20" stroke-width="8"/>
+    <rect x="220" y="92" width="360" height="72" rx="24" fill="#f8d77c" stroke="#8f4e0b" stroke-width="8"/>
+    <path d="M245 119h310M255 137h290" stroke="#8f4e0b" stroke-width="7" opacity=".65"/>
+    <rect x="252" y="150" width="296" height="344" rx="56" fill="url(#glass)"/>
+    <rect x="280" y="305" width="240" height="112" rx="24" fill="#fff8e8" stroke="#e6be65" stroke-width="6"/>
+    <text x="400" y="348" text-anchor="middle" font-family="Georgia,serif" font-size="31" font-weight="700" fill="#3b1d08">GELEIA</text>
+    <text x="400" y="384" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#b70f2e">MORANGO</text>
+  </g>
+  <g fill="#dd1838" stroke="#9b1029" stroke-width="5">
+    <path d="M132 458c-26-56 14-102 68-83 45 16 50 68 12 111-31 36-58 34-80-28z"/>
+    <path d="M590 456c-13-63 36-98 84-66 40 27 29 77-19 108-39 25-55 12-65-42z"/>
+  </g>
+  <g fill="#3d7a2f"><path d="M154 385l-23-34 42 13 28-29 2 40 38 16-41 12z"/><path d="M615 392l-6-42 36 24 36-21-10 40 32 27-43 1z"/></g>
+  <g fill="#ffd36b"><circle cx="162" cy="423" r="4"/><circle cx="188" cy="448" r="4"/><circle cx="626" cy="437" r="4"/><circle cx="652" cy="463" r="4"/></g>
+</svg>
