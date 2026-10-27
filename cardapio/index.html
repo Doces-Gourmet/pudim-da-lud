@@ -901,15 +901,18 @@ const SIZES = {
 
 /* Cardápio e preços oficiais — 80 / 150 / 250 / 500 / 1100 ml. */
 const FLAVORS = [
-  { id:"limao-siciliano", gourmet:true, nome:"Pudim de Limão Siciliano", desc:"Gourmet, cremoso e refrescante, com o sabor cítrico do limão siciliano.", img:"assets/pudim-limao-siciliano-site-v2.svg", precos:{"80":12.99,"150":17.99,"250":31.99,"500":56.99,"1100":98.99} },
-  { id:"frutas-vermelhas", gourmet:true, nome:"Pudim de Frutas Vermelhas", desc:"Base de Leite Ninho com geleia de frutas vermelhas e pedaços de morango, mirtilo, amora e framboesa.", img:"assets/pudim-frutas-vermelhas-v3.jpg", precos:{"80":14.99,"150":19.99,"250":33.99,"500":58.99,"1100":100.99} },
-  { id:"tradicional", nome:"Pudim Tradicional", desc:"Clássico, cremoso e irresistível.", img:"assets/pudim-tradicional-site.jpg", precos:{"80":6.99,"150":11.99,"250":21.99,"500":39.99,"1100":69.99} },
-  { id:"maracuja", nome:"Pudim de Maracujá", desc:"Cremoso, equilibrado e com o toque tropical do maracujá.", img:"assets/pudim-maracuja-site.jpg", precos:{"80":6.99,"150":12.99,"250":23.99,"500":43.99,"1100":76.99} },
-  { id:"chocolate", nome:"Pudim de Chocolate 50% Cacau", desc:"Sabor intenso de chocolate em uma textura super cremosa.", img:"assets/pudim-chocolate-confetes-v2.jpg", precos:{"80":8.99,"150":13.99,"250":25.99,"500":46.99,"1100":81.99} },
-  { id:"leite-ninho", nome:"Pudim de Leite Ninho", desc:"Leve, doce e com o sabor único do Leite Ninho.", img:"assets/pudim-leite-ninho-site.jpg", precos:{"80":9.99,"150":14.99,"250":27.99,"500":50.99,"1100":89.99} },
-  { id:"ovomaltine", nome:"Pudim de Ovomaltine", desc:"Cremoso, chocolatudo e com o sabor marcante de Ovomaltine.", img:"assets/pudim-ovomaltine-site.jpg", precos:{"80":10.99,"150":15.99,"250":29.99,"500":54.99,"1100":96.99} },
-  { id:"cafe", nome:"Pudim de Café", desc:"A combinação perfeita entre pudim cremoso e café.", img:"assets/pudim-cafe-graos-v3.jpg", precos:{"80":10.99,"150":13.99,"250":25.99,"500":47.99,"1100":83.99} },
-  { id:"geleia-frutas-vermelhas", novidade:true, nome:"Geleia de Frutas Vermelhas", desc:"Geleia artesanal com morango, framboesa, amora e mirtilo. Pote com 270 g.", img:"assets/geleia-frutas-vermelhas-270g.jpg", defaultSize:"270", sizeLabels:{"270":"270 g"}, precos:{"270":30.00} }
+  { id:"limao-siciliano", gourmet:true, nome:"Pudim de Limão Siciliano", desc:"Gourmet, cremoso e refrescante, com o sabor cítrico do limão siciliano.", img:"assets/pudim-limao-siciliano-site-v2.svg", precos:{"80":13.00,"150":18.00,"250":32.00,"500":57.00,"1100":99.00} },
+  { id:"frutas-vermelhas", gourmet:true, nome:"Pudim de Leite Ninho com Geleia de Frutas Vermelhas", desc:"Base de Leite Ninho com geleia artesanal de amora, framboesa, mirtilo e morango.", img:"assets/pudim-frutas-vermelhas-v3.jpg", precos:{"80":15.00,"150":20.00,"250":34.00,"500":59.00,"1100":100.00} },
+  { id:"ninho-geleia-morango", novidade:true, nome:"Pudim de Leite Ninho com Geleia de Morango", desc:"Base cremosa de Leite Ninho com geleia artesanal de morango.", img:"assets/pudim-frutas-vermelhas-v2.jpg", precos:{"80":15.00,"150":20.00,"250":34.00,"500":59.00,"1100":100.00} },
+  { id:"tradicional", nome:"Pudim Tradicional", desc:"Clássico, cremoso e irresistível.", img:"assets/pudim-tradicional-site.jpg", precos:{"80":7.00,"150":12.00,"250":22.00,"500":40.00,"1100":70.00} },
+  { id:"maracuja", nome:"Pudim de Maracujá", desc:"Cremoso, equilibrado e com o toque tropical do maracujá.", img:"assets/pudim-maracuja-site.jpg", precos:{"80":7.00,"150":13.00,"250":24.00,"500":44.00,"1100":77.00} },
+  { id:"chocolate", nome:"Pudim de Chocolate 50% Cacau", desc:"Sabor intenso de chocolate em uma textura super cremosa.", img:"assets/pudim-chocolate-confetes-v2.jpg", precos:{"80":9.00,"150":14.00,"250":26.00,"500":47.00,"1100":82.00} },
+  { id:"leite-ninho", nome:"Pudim de Leite Ninho", desc:"Leve, doce e com o sabor único do Leite Ninho.", img:"assets/pudim-leite-ninho-site.jpg", precos:{"80":10.00,"150":15.00,"250":28.00,"500":51.00,"1100":90.00} },
+  { id:"ovomaltine", nome:"Pudim de Ovomaltine", desc:"Cremoso, chocolatudo e com o sabor marcante de Ovomaltine.", img:"assets/pudim-ovomaltine-site.jpg", precos:{"80":11.00,"150":16.00,"250":30.00,"500":55.00,"1100":97.00} },
+  { id:"cafe", nome:"Pudim de Café", desc:"A combinação perfeita entre pudim cremoso e café.", img:"assets/pudim-cafe-graos-v3.jpg", precos:{"80":11.00,"150":14.00,"250":26.00,"500":48.00,"1100":84.00} },
+  { id:"geleia-frutas-vermelhas", nome:"Geleia de Frutas Vermelhas", desc:"Geleia artesanal de amora, framboesa, mirtilo e morango. Pote com 270 g.", img:"assets/geleia-frutas-vermelhas-270g.jpg", defaultSize:"270", sizeLabels:{"270":"270 g"}, precos:{"270":30.00} },
+  { id:"geleia-morango", novidade:true, nome:"Geleia de Morango", desc:"Geleia artesanal de morango. Pote com 270 g.", img:"assets/geleia-morango.svg", defaultSize:"270", sizeLabels:{"270":"270 g"}, precos:{"270":30.00} },
+  { id:"geleia-maracuja", novidade:true, nome:"Geleia de Maracujá", desc:"Geleia artesanal de maracujá. Pote com 270 g.", img:"assets/geleia-maracuja.svg", defaultSize:"270", sizeLabels:{"270":"270 g"}, precos:{"270":25.00} }
 ];
 
 /* =========================================================
@@ -917,7 +920,12 @@ const FLAVORS = [
    ========================================================= */
 let cart = JSON.parse(localStorage.getItem("pudimLudCart") || "[]")
   .filter(item => item.flavorId !== "combo-degustacao")
-  .map(item => item.size === "120" ? {...item, size:"150", ml:"150 ml", key:item.flavorId + "-150"} : item);
+  .map(item => item.size === "120" ? {...item, size:"150", ml:"150 ml", key:item.flavorId + "-150"} : item)
+  .map(item => {
+    const flavor = FLAVORS.find(f => f.id === item.flavorId);
+    const precoAtual = flavor?.precos?.[item.size];
+    return precoAtual == null ? item : {...item, nome:flavor.nome, ml:getSizeLabel(flavor,item.size), preco:precoAtual};
+  });
 let selectedSize = {}; // sabor.id -> "80"/"250"/"500"/"1100" escolhido no card antes de adicionar
 let selectedPay = "";
 let activeCatalog = "pudins";
